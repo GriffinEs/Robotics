@@ -38,8 +38,8 @@ task main(){
 	while(1){ // Do this forever, unless the task is stopped.
 
 		if(arcade){ 	//................................ the code that runs the joysticks is dependant on arcade mode.
-			motor[port2] = (vexRT[Ch1]-vexRT[Ch2]); 		// left wheel
-			motor[port3] = -(vexRT[Ch1]+vexRT[Ch2]); 	// right wheel
+			motor[port2] = (vexRT[Ch2]+vexRT[Ch1]); 		// left wheel
+			motor[port3] = -(vexRT[Ch2]-vexRT[Ch1]); 	// right wheel
 			motor[port4] = -(vexRT[Ch3]); 							// left arms
 			motor[port5] = (vexRT[Ch3]); 								// right arms
 		} else { 			//................................ if it's not in arcade mode...
