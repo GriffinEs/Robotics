@@ -12,8 +12,18 @@ void ArcadeFlip(bool btn, bool old){		// function to switch arcade mode
 }
 
 
+task killswitch(){ // The task to listen for the killswitch to be pressed and stop the program if it is.
+	while(1){ 									// do this forever, unless it's stopped by itself
+		if(SensorValue[dgtl1]){		// If the killswitch (port 1) is pressed, then
+			stopAllTasks();					// stop all tasks (this one and task main).
+		}
+	}
+}
+
 task main(){
-	while(!SensorValue(dgtl1)){ // While the kill switch is not pressed...
+	startTask(killswitch); // Start the task to listen for killswitch press
+
+	while(1){ // Do this forever, unless the task is stopped.
 
 		if(arcade){ 	//................................ the code that runs the joysticks is dependant on arcade mode.
 			motor[port1] = (vexRT[Ch1]-vexRT[Ch2]); 		// left wheel
