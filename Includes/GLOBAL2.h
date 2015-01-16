@@ -3,8 +3,8 @@
 void TurnRobot(float deg, int power, float dia, float trc, float fix){
 	float wc = PI*dia;
 	float rc = PI*trc;
-	deg = deg*fix;
-	float wheeldist = (rc*deg)/360.0;
+	deg = abs(deg*fix);
+	float wheeldist = abs((rc*deg)/360.0);
 	float turnleft = sgn(deg);
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
@@ -44,6 +44,7 @@ void TurnRobot(float deg, int power, float dia, float trc, float fix){
 void MoveDist(float cm, int power, int dia){
 	float wc = PI*dia;
 	int back = sgn(cm);
+	cm = abs(cm);
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
 
@@ -75,3 +76,14 @@ void MoveDist(float cm, int power, int dia){
 	motor[port2] = 0;
 	motor[port3] = 0;
 }
+
+
+
+/*
+task killswitch(){ 						// The task to listen for the killswitch to be pressed and stop the program if it is.
+	while(1){ 									// do this forever, unless it's stopped by itself
+		if(SensorValue[dgtl1]){		// If the killswitch (port 1) is pressed, then
+			stopAllTasks();					// stop all tasks (this one and task main).
+		}
+	}
+}*/

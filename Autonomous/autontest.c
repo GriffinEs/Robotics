@@ -1,4 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
+#pragma config(Sensor, dgtl1,  ,               sensorTouch)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Motor,  port2,            ,             tmotorVex269_MC29, openLoop, encoderPort, I2C_1)
@@ -9,9 +10,12 @@
 
 float trc = 35.0;
 float dia = 10.16;
-float fix = 0.88;
+float fix = 0.9;
 
 task main(){
+	nMotorEncoder[port2] = 0;
+	nMotorEncoder[port3] = 0;
+	//startTask(killswitch);
 	TurnRobot(90,100,dia,trc,fix);
 	MoveDist(100,100,dia);
 	TurnRobot(90,100,dia,trc,fix);
