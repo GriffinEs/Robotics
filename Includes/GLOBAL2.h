@@ -3,9 +3,9 @@
 void TurnRobot(float deg, int power, float dia, float trc, float fix){
 	float wc = PI*dia;
 	float rc = PI*trc;
+	float turnleft = sgn(deg);
 	deg = abs(deg*fix);
 	float wheeldist = abs((rc*deg)/360.0);
-	float turnleft = sgn(deg);
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
 	nMotorEncoder[port2] = 0;
