@@ -23,7 +23,6 @@ bool clawopen = true;	  // Whether or not the claw is open
 bool oldcl = false;			// was the claw opened last cycle?
 bool oldbtn = false; 		// the last value of vexRT[Btn8D] to help with switching arcade mode
 bool oldbtn2 = false;		// the last value of vexRT[Btn7R] to help with opening and closing the
-int offset = 0;
 
 
 void ArcadeFlip(bool btn, bool old){		// function to switch arcade mode
@@ -32,12 +31,6 @@ void ArcadeFlip(bool btn, bool old){		// function to switch arcade mode
 	} else if(btn && !old && !arcade){		// if the button is on and it wasn't on before and arcade is off then
 		arcade = true;											// turn arcade on.
 	}
-}
-
-
-void PIDMotorSync(int armpos,int clawpos){
-	clawpos *= 2;
-	motor[port6] = (offset-clawpos-armpos);
 }
 
 
@@ -84,8 +77,7 @@ task main(){
 			motor[port4] = -(vexRT[Btn6U]-vexRT[Btn6D])*127-20;			// left arms to a button
 			motor[port5] = (vexRT[Btn6U]-vexRT[Btn6D])*127+20;			// right arms to a button
 		} 						//........................................ the buttons below don't change.
-		offset += (vexRT[Btn5U]-vexRT[Btn5D]);							 		// claw actuator
-		PIDMotorSync(nMotorEncoder[port5],nMotorEncoder[port6]);
+		motor[port6] = -(-vexRT[Btn5U]*127+vexRT[Btn5D]*127);
 
 
 

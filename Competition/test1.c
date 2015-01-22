@@ -103,11 +103,7 @@ task autonomous()
  	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
 	MoveDist(91,100,dia);               // forward
-	TurnRobot(-90,100,dia,trc,fix);     // turns 90 degrees right
-	MoveDist(85,100,dia);               // forward a bit less than 2 feet
-	TurnRobot(-90,100,dia,trc,fix);    // turns 90 degrees right
-	MoveDist(122,100,dia);              // forward 3 feet
-	MoveDist(-61,100,dia);              // backwards
+
   // .....................................................................................
 
 }
@@ -144,10 +140,7 @@ task usercontrol(){
 			motor[port4] = -(vexRT[Btn6U]-vexRT[Btn6D])*127-20;			// left arms to a button
 			motor[port5] = (vexRT[Btn6U]-vexRT[Btn6D])*127+20;			// right arms to a button
 		} 						//........................................ the buttons below don't change.
-		bool mtrchng = (arcade*((vexRT[Ch3] > 10)||(vexRT[Ch3] < -10))) || ((!arcade)*(vexRT[Btn6D]||vexRT[Btn6U]));
-		offset += (vexRT[Btn5U]-vexRT[Btn5D]);//*(!mtrchng);							 		// claw actuator, but only if the arm isn't moving
-		PIDMotorSync(nMotorEncoder[port5],nMotorEncoder[port6]);
-		//motor[port6] = -(vexRT[Btn5U]*127-vexRT[Btn5D]*127);
+		motor[port6] = -(-vexRT[Btn5U]*127+vexRT[Btn5D]*127);
 
 
 		if(vexRT[Btn7R] && !oldcl && clawopen){						// if 7l is pressed and the claw mode wasn't switched last cycle

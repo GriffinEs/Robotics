@@ -198,8 +198,7 @@ task usercontrol(){
 			motor[port4] = -(vexRT[Btn6U]-vexRT[Btn6D])*127-20;			// left arms to a button
 			motor[port5] = (vexRT[Btn6U]-vexRT[Btn6D])*127+20;			// right arms to a button
 		} 						//........................................ the buttons below don't change.
-		offset += (vexRT[Btn5U]-vexRT[Btn5D]);							 		// claw actuator
-		PIDMotorSync(nMotorEncoder[port5],nMotorEncoder[port6]);
+		motor[port6] = -(-vexRT[Btn5U]*127+vexRT[Btn5D]*127);
 
 
 
