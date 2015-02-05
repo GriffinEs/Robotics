@@ -1,6 +1,5 @@
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl1,  ,               sensorTouch)
-#pragma config(Sensor, dgtl2,  ,               sensorSONAR_cm)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_2,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Motor,  port2,            ,             tmotorVex269_MC29, openLoop, encoderPort, I2C_1)
@@ -15,7 +14,6 @@
 
 
 task main(){
-	SensorValue[dgtl2] =99999;
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
 	motor[port7] = 10;
@@ -38,4 +36,10 @@ task main(){
 	motor[port5] = 100;
 	wait1Msec(700);
 	MoveDist(10,100,dia);
+	MoveDist(153,100,dia);             // forward 4.5 feet
+	TurnRobot(90,100,dia,trc,fix);     // turns 90 degrees right
+	MoveDist(85,100,dia);              // forward a bit less than 2 feet
+	TurnRobot(90,100,dia,trc,fix);     // turns 90 degrees right
+	MoveDist(122,100,dia);             // forward 3 feet
+	MoveDist(-61,100,dia);             // backwards
 }
