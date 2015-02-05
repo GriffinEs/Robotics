@@ -18,9 +18,9 @@ task main(){
 	SensorValue[dgtl2] =99999;
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
-	motor[port7] = 30;
+	motor[port7] = 10;
 	MoveDist(18,100,dia);
-	motor[port6] = -50;
+	motor[port6] = -100;
 	wait1Msec(500);
 	motor[port6] = 0;
 	motor[port7] = -100;
@@ -30,7 +30,7 @@ task main(){
 	motor[port2] = 50;
 	motor[port3] = -50;
 	wait1Msec(1000);
-	while(SensorValue[dgtl2] > 30){}
+	while(SensorValue[dgtl2] > 30 && SensorValue[dgtl2] != -1){}
 	motor[port2] = 60;
 	motor[port3] = -60;
 	wait1Msec(600);
