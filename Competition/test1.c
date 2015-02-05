@@ -1,7 +1,6 @@
 
 #pragma config(I2C_Usage, I2C1, i2cSensors)
 #pragma config(Sensor, dgtl1,  ,               sensorTouch)
-#pragma config(Sensor, dgtl2,  ,               sensorSONAR_cm)
 #pragma config(Sensor, I2C_3,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_4,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
 #pragma config(Sensor, I2C_1,  ,               sensorQuadEncoderOnI2CPort,    , AutoAssign)
@@ -100,29 +99,12 @@ void pre_auton()
 
 task autonomous()
 {
-	SensorValue[dgtl2] =99999;
-	nMotorEncoder[port2] = 0;
+  // .....................................................................................
+ 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
-	motor[port7] = 30;
-	MoveDist(18,100,dia);
-	motor[port6] = -50;
-	wait1Msec(500);
-	motor[port6] = 0;
-	motor[port7] = -100;
-	wait1Msec(1000);
-	motor[port7] = 0;
-	MoveDist(-8,100,dia);
-	motor[port2] = 50;
-	motor[port3] = -50;
-	wait1Msec(1000);
-	while(SensorValue[dgtl2] > 30){}
-	motor[port2] = 60;
-	motor[port3] = -60;
-	wait1Msec(600);
-	motor[port4] = -100;
-	motor[port5] = 100;
-	wait1Msec(700);
-	MoveDist(10,100,dia);
+	MoveDist(91,100,dia);               // forward
+
+  // .....................................................................................
 
 }
 
