@@ -96,103 +96,155 @@ void pre_auton()
 
 task autonomous()
 {
-
+	SensorType[dgtl2] = sensorNone;
+	SensorType[dgtl4] = sensorSONAR_TwoPins_cm;
 	nMotorEncoder[port2] = 0;
 	nMotorEncoder[port3] = 0;
 	nMotorEncoder[port5] = 0;
 	nMotorEncoder[port5] = 0;
 	nMotorEncoder[port5] = 0;
-	wait1Msec(30);
+	wait1Msec(500);
 	MoveDist(-10,100,dia);
-	MoveDist(7,100,dia);
+	MoveDist(4,100,dia);
 	motor[port4] = -100;
 	motor[port5] = 100;
 	motor[port6] = 55;
-	motor[port7] = -50;
-	while(nMotorEncoder[port5] < 380){} //raise arm
-	motor[port4] = 0;
-	motor[port5] = 0;
+	motor[port7] = -100;
+	wait1Msec(650);
+	motor[port4] = -10;
+	motor[port5] = 10;
 	motor[port6] = -10;
-	motor[port2] = -50;
-	motor[port3] = 50;
-	wait1Msec(300);
-	motor[port7] = 0;
-	while(SensorValue[dgtl4] > 30 || SensorValue[dgtl2] == -1){} // turn to thing
-	motor[port2] = 60;
-	motor[port3] = -60;
-	wait1Msec(50);
+	motor[port2] = 50;
+	motor[port3] = -50;
+	motor[port7] = -10;
+	wait1Msec(570);
+	int lv = 0;
+	while((SensorValue[dgtl4] > 30 || SensorValue[dgtl4] == -1) || !(abs(SensorValue[dgtl4]-lv) < 5)){
+		lv = SensorValue[dgtl4];
+	}
+	motor[port2] = -60;
+	motor[port3] = 60;
+	wait1Msec(100);
 	motor[port2] = 30;
 	motor[port3] = 30;
-	while(SensorValue[dgtl4] > 4 || SensorValue[dgtl2] == -1){} //move to thing
+	wait1Msec(200);
+	while((SensorValue[dgtl4] > 4 || SensorValue[dgtl4] == -1) || !(abs(SensorValue[dgtl4]-lv) < 5)){
+		lv = SensorValue[dgtl4];
+	}
+	wait1Msec(500);
 	motor[port2] = 0;
 	motor[port3] = 0;
 	motor[port7] = 100;
 	wait1Msec(500);
 
-	motor[port7] = 5;
+	motor[port7] = 15;
 	motor[port4] = -100;
 	motor[port5] = 100;
 	motor[port6] = -100;
 	motor[port2] = -60;
 	motor[port3] = -60;
 
-	while(nMotorEncoder[port5] < 500){} // up
+	while(nMotorEncoder[port5] < 550){}
 	wait1Msec(200);
 
-	motor[port4] = 0;
-	motor[port5] = 0;
+	motor[port4] = -10;
+	motor[port5] = 10;
 	motor[port6] = 0;
-	motor[port2] = 50;
-	motor[port3] = -50;
-	wait1Msec(500);
-	while(SensorValue[dgtl2] > 40 && SensorValue[dgtl2] != -1){} // turn to base
-	wait1Msec(50);
-	motor[port2] = -10;
-	motor[port3] = 10;
-	wait1Msec(200);
-	motor[port2] = 40;
+	MoveDist(-200,50,100);
+	motor[port2] = -40;
 	motor[port3] = 40;
-	motor[port6] = 60;
+	SensorType[dgtl4] = sensorNone;
+	SensorType[dgtl2] = sensorSONAR_TwoPins_cm;
+	wait1Msec(700);
+	MoveDist(21,50,dia);
+	motor[port2] = -35;
+	motor[port3] = 35;
+	lv = 0;
+	bool going = true;
+	bool passed = false;
+	int lowest = 999999;
+	wait1Msec(360);
+	while(going){
+		if(!passed){
+			if(SensorValue[dgtl2] > lowest && lv > lowest && lowest < 40){
+				passed = true;
+				motor[port2] = 28;
+				motor[port3] = -28;
+			}
+		} else {
+			if(abs(lowest-lv) < 1){
+				going = false;
+			}
+		}
 
-	while(SensorValue[dgtl2] > 23 && SensorValue[dgtl2] != -1){} // move towards base
+		if(SensorValue[dgtl2] < lowest && SensorValue[dgtl2] > 0){
+			lowest = SensorValue[dgtl2];
+		}
+		lv = SensorValue[dgtl2];
+	}
 
-	motor[port2] = 0;
-	motor[port3] = 0;
+	motor[port2] = 15;
+	motor[port3] = -15;
+	wait1Msec(200);
+	motor[port2] = -35;
+	motor[port3] = -35;
+
 	wait1Msec(100);
+	lv = 0;
+	while((SensorValue[dgtl2] < 20 && SensorValue[dgtl2] != -1) || !(abs(SensorValue[dgtl2]-lv) < 5)){
+		lv = SensorValue[dgtl2];
+	}
+	motor[port2] = -15;
+	motor[port3] = -15;
 	motor[port7] = 5;
 	motor[port4] = 50;
 	motor[port5] = -50;
 	motor[port6] = 120;
 
-	while(nMotorEncoder[port5] > 100){} // lower
-
-	motor[port6] = 0;
-	motor[port7] = -120;
-	wait1Msec(300);
-	MoveDist(-10,100,dia);
+	while(nMotorEncoder[port5] > 350){}
+	motor[port4] = 0;
+	motor[port5] = 0;
+	motor[port2] = 35;
+	motor[port3] = 35;
+	motor[port6] = 100;
+	wait1Msec(500);
+	motor[port4] = 20;
+	motor[port5] = -20;
+	while(nMotorEncoder[port5] > 150){}
+	wait1Msec(500);
+	motor[port7] = -100;
+	wait1Msec(500);
+	MoveDist(-25,100,dia);
 	motor[port6] = 0;
 
 
 	motor[port4] = -100;
 	motor[port5] = 100;
-	motor[port6] = -50;
-	while(nMotorEncoder[port5] < 300){}
+	motor[port6] = 0;
+	while(nMotorEncoder[port5] < 400){}
 	motor[port4] = 0;
 	motor[port5] = 0;
 	motor[port6] = 0;
 
-	motor[port2] = -40;
-	motor[port3] = 40;
+	motor[port2] = 40;
+	motor[port3] = -40;
 	motor[port7] = 0;
-	wait1Msec(1000);
-	while(SensorValue[dgtl4] > 30 || SensorValue[dgtl2] == -1){}
-	wait1Msec(100);
-	motor[port2] = 60;
-	motor[port3] = -60;
+	SensorType[dgtl2] = sensorNone;
+	SensorType[dgtl4] = sensorSONAR_TwoPins_cm;
+	wait1Msec(700);
+	MoveDist(16,100,dia);
+	motor[port2] = 35;
+	motor[port3] = -35;
+	wait1Msec(600);
+	while(SensorValue[dgtl4] > 49 || SensorValue[dgtl4] == -1){}
+	motor[port2] = -60;
+	motor[port3] = 60;
 	wait1Msec(100);
 	motor[port2] = 30;
 	motor[port3] = 30;
-	while(SensorValue[dgtl4] > 4 || SensorValue[dgtl2] == -1){}
+	wait1Msec(100);
+	while(SensorValue[dgtl4] > 4 || SensorValue[dgtl4] == -1){}
+	wait1Msec(500);
 	motor[port2] = 0;
 	motor[port3] = 0;
 	motor[port7] = 100;
